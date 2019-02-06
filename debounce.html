@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=div, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+	<script>
+	    window.onload = init;
+		function init() {
+		    var onchange = debounce(onChangeHandler, 300);
+		   window.addEventListener('resize', onchange);
+		}
+		function onChangeHandler(e){
+		  console.log(e.target.innerHeight);
+		}
+		function debounce(func, time){
+			var timeout= null;
+			return function(...args){
+				var context = this;
+				var later = function(){
+					func.call(context, ...args)
+				}
+				clearTimeout(timeout);
+				timeout = setTimeout(later, time)
+			}
+		}
+		
+		function throttle(func, time){
+			var timeout= 0;
+			return function(...args){
+				var currentTime = (new Date).getTime();
+				
+				if(currentTime-timeout < time){
+					return;
+				}
+				timeout= currentTime;
+				return func(...args)
+			}
+		}
+	</script>
+</body>
+
+</html>
